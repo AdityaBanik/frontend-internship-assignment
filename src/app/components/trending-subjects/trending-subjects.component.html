@@ -1,3 +1,14 @@
+<div class="header tw-p-5">
+  <div class="tw-text-24-px tw-font-600">
+    <button (click)="goBack()" class="tw-text-gray-800 tw-outline-none">
+      <mat-icon aria-label="Back Icon">arrow_back</mat-icon>
+    </button>
+    Trending Subjects
+  </div>
+</div>
+
+
+
 <div *ngIf="allBooks.length > 0">
   <front-end-internship-assignment-table-view
   [booksList]="allBooks"

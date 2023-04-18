@@ -20,6 +20,21 @@
   tw-justify-center
   tw-h-60-px
   tw-w-200-px
+  tw-relative; // Add relative positioning to the search button container
+  max-width: 600px; // Limit the max width of the search input container
+
+  input[type="text"] {
+    @apply tw-border-0 tw-bg-inherit tw-w-full tw-px-4 tw-py-3 tw-placeholder-gray-400 focus:tw-outline-none ;
+    box-sizing: border-box; // Include padding and borders in the element's total width and height
+  }
+
+  button[mat-icon-button] {
+    @apply tw-p-0 tw-m-0;
+    position: absolute; // Position the clear button absolutely
+    top: 50%;
+    right: 10px; // Adjust the value to suit your design
+    transform: translateY(-50%);
+  }
 }
 
 .trending-subjects {

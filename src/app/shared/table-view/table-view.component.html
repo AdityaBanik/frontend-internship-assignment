@@ -1,5 +1,8 @@
 <div class="tw-m-24-px">
-  <div class="tw-mb-24-px tw-text-24-px"> Top {{ booksList.length }} book{{ booksList.length > 1 ? "s" : "" }} on {{ subjectName }}</div>
+  
+  <div *ngIf="subjectName" class="tw-mb-24-px tw-text-24-px"> Top {{ booksList.length }} book{{ booksList.length > 1 ? "s" : "" }} on {{
+    subjectName }}</div>
+  
 
   <ng-container>
     <table class="table-view">
@@ -11,16 +14,41 @@
         </tr>
       </thead>
       <tbody class="table-body">
-        <tr *ngFor="let book of booksList" class="row-data">
+        <tr *ngFor="let book of paginatedItems" class="row-data">
           <td>
             <a class="tw-no-underline" href="https://openlibrary.org{{ book.key }}" target="_blank">{{ book.title }}</a>
           </td>
           <td>
-            {{ book.authors.length > 0 ? book.authors[0].name : "Unknown" }}
+            <span *ngIf="book.authors">{{book.authors.length > 0 ? book.authors[0].name : "Unknown" }}</span>
+            <span *ngIf="book.author_name">{{ book.author_name.length > 0 ? book.author_name[0] : "Unknown" }}</span>
           </td>
           <td>{{ book.first_publish_year }}</td>
         </tr>
       </tbody>
     </table>
+
+    <div class="pagination tw-m-3 tw-flex tw-justify-between tw-items-center">
+
+      <div>
+        <span class="page-number">{{ currentRange }}</span>
+      </div>
+
+      <div class="tw-flex tw-gap-3 tw-items-center">
+        <label for="items-per-page" >Display:</label>
+        <input type="number" class="tw-w-16" name="items-per-page" min="1" max="10" [(ngModel)]="itemsPerPage" (change)="setItemsPerPage(itemsPerPage)">
+        
+        <button class="prev-btn tw-m-2 tw-px-4 tw-py-2 tw-cursor-pointer" (click)="prevPage()" [disabled]="currentPage === 1"> < </button>
+
+        <ng-container *ngFor="let page of pages">
+          <a class="page-link" class="tw-m-2 tw-px-4 tw-py-2 tw-cursor-pointer"
+            [class.tw-bg-red-600]="page === currentPage" (click)="goToPage(page)">{{ page }}</a>
+        </ng-container>
+
+        <button class="next-btn tw-m-2 tw-px-4 tw-py-2 tw-cursor-pointer" (click)="nextPage()" [disabled]="currentPage === pageCount"> > </button>
+      </div>
+
+    </div>
+
+
   </ng-container>
 </div>

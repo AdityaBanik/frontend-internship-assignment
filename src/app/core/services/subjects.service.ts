@@ -11,7 +11,7 @@ export class SubjectsService {
   constructor(private apiService: ApiService) {}
 
   getAllBooks(subjectName: string): Observable<BookResponse> {
-    const limit = 10;
+    const limit = 20;
     return this.apiService.get(`/subjects/${subjectName.toLowerCase().split(' ').join('_')}.json?limit=${limit}`);
   }
 }

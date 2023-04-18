@@ -2,22 +2,40 @@
   <div class="tw-text-24-px tw-font-600">Open Books Library</div>
   <div class="search-button">
     <mat-icon class="tw-mt-16-px" aria-label="Search Icon">search</mat-icon>
-    <input
-      [formControl]="bookSearch"
-      name="searchKey"
-      type="text"
-      placeholder="Search Books"
-      class="tw-border-0 tw-bg-inherit"
-    >
+    <input [formControl]="bookSearch" name="searchKey" type="text" placeholder="Search Books"
+      class="tw-border-0 tw-bg-inherit">
+    <!-- Add a button to clear the input when there is content -->
+    <button mat-icon-button *ngIf="bookSearch.value" (click)="clearSearch()">
+      <mat-icon aria-label="Clear Icon">clear</mat-icon>
+    </button>
   </div>
 </div>
-<div class="tw-flex tw-flex-row tw-m-24-px">
-  <section class="trending-subjects">
-    <div class="tw-font-600 tw-text-24-px">Trending Subjects</div>
-    <ul class="tw-list-none tw-pl-0">
-      <li class="tw-text-16-px tw-cursor-pointer tw-p-12-px" *ngFor="let subject of trendingSubjects" routerLink="/trending-subject/{{ subject.name }}">
-        {{ subject.name }}
-      </li>
-    </ul>
-  </section>
-</div>
+
+<main class="tw-flex tw-items-stretch tw-justify-center">
+  <div class="tw-flex tw-flex-row tw-m-24-px">
+    <section class="trending-subjects">
+      <div class="tw-font-600 tw-text-24-px tw-whitespace-nowrap">Trending Subjects</div>
+      <ul class="tw-list-none tw-pl-0">
+        <li class="tw-text-16-px tw-cursor-pointer tw-p-12-px" *ngFor="let subject of trendingSubjects"
+          routerLink="/trending-subject/{{ subject.name }}">
+          {{ subject.name }}
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="tw-w-full tw-flex tw-justify-center tw-items-center">
+    <div *ngIf="isLoading">
+      <h1 class="tw-font-bold tw-text-24-px">Loading</h1>
+    </div>
+  
+    <div *ngIf="!isLoading && searchResults.length > 0">
+      <front-end-internship-assignment-table-view
+        [booksList]="searchResults"></front-end-internship-assignment-table-view>
+    </div>
+  
+    <div *ngIf="!isLoading && searchResults.length == 0">
+      <p>No results found.</p>
+    </div>
+  </div>
+</main>
